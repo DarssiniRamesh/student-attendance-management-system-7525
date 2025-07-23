@@ -41,9 +41,10 @@ app = FastAPI(
     openapi_tags=openapi_tags
 )
 
+# Set CORS to allow only the React frontend and provide secure defaults
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000"],  # Allow requests only from React dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -59,3 +60,7 @@ app.include_router(attendance_router)
 def health_check():
     """Health check endpoint for service monitoring."""
     return {"message": "Healthy"}
+
+# The OpenAPI schema is available at /openapi.json
+# The automatic Swagger UI docs are available at /docs
+# The alternative ReDoc documentation is auto-enabled at /redoc
